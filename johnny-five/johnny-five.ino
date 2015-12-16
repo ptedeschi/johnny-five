@@ -4,6 +4,7 @@
 #include <Servo.h>
 #include "Sonar.h"
 #include "LED.h"
+#include "ServoSweep.h"
 
 #define LOG_BAUD_RATE 9600
 #define TRIGGER_PIN  A3  // Arduino pin tied to trigger pin on the ultrasonic sensor.
@@ -14,10 +15,9 @@
 #define LED_PIN 13
 
 DCMotorBot _motorBot;
-Servo _servo;
 Sonar _sonar;
 LED _led;
-int pos = 0; // this sets up variables for use in the sketch (code)
+ServoSweep _servoSweep;
 
 void setup() {
   // put your setup code here, to run once:
@@ -27,36 +27,32 @@ void setup() {
 
   _sonar.initialize(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
+  _servoSweep.initialize(SERVO_PIN);
+
   // initialize bot pins
   _motorBot.setEnablePins(3, 5);
   _motorBot.setControlPins(2, 4, 7, 8);
-
-  _servo.attach(SERVO_PIN);  // attaches the servo on pin 9 (SERVO_2 on the Motor Drive Shield to the servo object
-  _servo.write(90); // tells the servo to position at 90-degrees ie. facing forward.
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   delay(500);
 
-  for (pos = 144; pos >= 36; pos -= 18)  // loop to sweep the servo (& sensor) from 144-degrees left to 36-degrees right at 18-degree intervals.
-  {
-    _servo.write(pos);
-    delay(90); // wait 90ms for servo to get to position
+  int currentDistance = _sonar.getDistance();
 
-    int currentDistance = _sonar.getDistance();
+  Log.Debug("Sonar distance %d\n", currentDistance);
 
-    Log.Debug("Sonar distance %d\n", currentDistance);
-
-    if (currentDistance >= MIN_SAFE_DIST) { // if the current distance to object is less than the collision distance
-      _led.turnOff();
-      _motorBot.moveForward();
-    }
-    else
-    {
-      _led.turnOn();
-      _motorBot.stop();
-    }
+  if (currentDistance >= MIN_SAFE_DIST) { // if the current distance to object is less than the collision distance
+    //_led.turnOff();
+    _motorBot.moveForward();
   }
+  else
+  {
+    //_led.turnOn();
+    _motorBot.stop();
+  }
+
+    _servoSweep.sweep();
+    delay(15); // waits for the servo to reach the position
 }
 

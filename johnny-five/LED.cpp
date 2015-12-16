@@ -20,20 +20,16 @@ void LED::setPin(int pin)
 void LED::blink()
 {
   digitalWrite(_pin, HIGH);
-  delay(1000);
+  delay(200);
   digitalWrite(_pin, LOW);
-  delay(1000);
 }
 
 void LED::turnOn()
 {
   digitalWrite(_pin, HIGH);
-  delay(1000);              // wait for a second
 }
 
 void LED::turnOff()
 {
   digitalWrite(_pin, LOW);
-  delay(1000);              // wait for a second
-
 }

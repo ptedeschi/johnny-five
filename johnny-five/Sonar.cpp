@@ -20,7 +20,7 @@ void Sonar::initialize(uint8_t trigger_pin, uint8_t echo_pin, unsigned int max_c
 
 int Sonar::getDistance()
 {
-  delay(50);                     // Wait 50ms between pings (about 20 pings/sec). 29ms should be the shortest delay between pings.
+  // Wait 50ms between pings (about 20 pings/sec). 29ms should be the shortest delay between pings.
   return _newPing->ping_cm();          // Send ping, get distance in cm (0 = outside set distance range)
 }
 

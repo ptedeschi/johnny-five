@@ -1,28 +1,30 @@
 /*
-  ServoSweep.h - Library for handle ServoSweep funcionalities.
+  Servomotor.h - Library for handle ServoSweep funcionalities.
   Created by Patrick Tedeschi, December, 2015.
 
   Dependes on Servo
   https://bitbucket.org/teckel12/arduino-new-ping/wiki/Home
 */
-#ifndef ServoSweep_h
-#define ServoSweep_h
+#ifndef Servomotor_h
+#define Servomotor_h
 
 #include <Arduino.h>
 #include <Servo.h>
 
 enum class Direction { CLOCKWISE, ANTICLOCKWISE };
+enum class Position { LEFT, CENTER, RIGHT };
 
-class ServoSweep
+class Servomotor
 {
   private:
     Servo _servo;
     Direction _direction;
 
   public:
-    ServoSweep();
+    Servomotor();
     void initialize(uint8_t pin);
     void sweep();
+    void setPosition(Position position);
     int getDegree();
 };
 

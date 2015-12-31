@@ -22,5 +22,6 @@ int Sonar::getDistance()
 {
   // Wait 50ms between pings (about 20 pings/sec). 29ms should be the shortest delay between pings.
   return _newPing->ping_cm();          // Send ping, get distance in cm (0 = outside set distance range)
+  //return 50;
 }
 

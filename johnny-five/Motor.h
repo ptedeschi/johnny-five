@@ -18,11 +18,13 @@ class Motor
   public:
     Motor();
     void setSpeed(int speed);
-    void forward();
-    void backward();
-    void left();
-    void right();
-    void shutdown();
+    void moveForward();
+    void moveBackward();
+    void turnLeft();
+    void turnRight();
+    void veerLeft();
+    void veerRight();
+    void stop();
 };
 
 #endif
